@@ -202,11 +202,11 @@
 
   /* File Upload */
   .upload-btn {
-    @apply flex min-h-14 w-full items-center justify-center gap-1.5 rounded-md;
+    @apply flex min-h-14 px-4 w-full items-center justify-center gap-1.5 rounded-md bg-dark-300 cursor-pointer;
   }
 
   .upload-filename {
-    @apply mt-1 text-center text-xs;
+    @apply mt-1 text-center text-xs line-clamp-1;
   }
 
   .progress {
@@ -416,7 +416,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-dark-100 text-foreground;
   }
 }
 
