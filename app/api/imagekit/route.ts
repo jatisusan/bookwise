@@ -1,11 +1,10 @@
 import config from "@/lib/config";
 import { getUploadAuthParams } from "@imagekit/next/server";
-import ImageKit from "imagekit";
 import { NextResponse } from "next/server";
 
 const {
   env: {
-    imagekit: { urlEndpoint, privateKey, publicKey },
+    imagekit: { privateKey, publicKey },
   },
 } = config;
 
