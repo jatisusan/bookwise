@@ -24,6 +24,10 @@ export const sendEmail = async ({
 }) => {
   await qstashClient.publishJSON({
     url: "https://api.emailjs.com/api/v1.0/email/send",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
     body: {
       service_id: config.env.emailjs.serviceId,
       template_id: config.env.emailjs.templateId,
