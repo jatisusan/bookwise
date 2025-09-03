@@ -1,6 +1,7 @@
 import { Client as WorkflowClient } from "@upstash/workflow";
 import { Client as QStashClient } from "@upstash/qstash";
 import config from "./config";
+import sgMail from "@sendgrid/mail";
 
 export const workflowClient = new WorkflowClient({
   baseUrl: config.env.upstash.qstashUrl,
@@ -10,6 +11,8 @@ export const workflowClient = new WorkflowClient({
 const qstashClient = new QStashClient({
   token: config.env.upstash.qstashToken,
 });
+
+sgMail.setApiKey(config.env.sendGrid.apiKey);
 
 export const sendEmail = async ({
   email,
@@ -22,22 +25,17 @@ export const sendEmail = async ({
   message: string;
   title: string;
 }) => {
-  await qstashClient.publishJSON({
-    url: "https://api.emailjs.com/api/v1.0/email/send",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: {
-      service_id: config.env.emailjs.serviceId,
-      template_id: config.env.emailjs.templateId,
-      user_id: config.env.emailjs.publicKey,
-      template_params: {
-        email,
-        subject,
-        message,
-        title
-      },
-    },
-  });
+  try {
+    await sgMail.send({
+      to: email,
+      from: process.env.SENDGRID_FROM_EMAIL!,
+      subject,
+      text: message,
+      html: `<h1>${title}</h1><p>${message}</p>`,
+    });
+    console.log(`Email sent to ${email}`);
+  } catch (error) {
+    console.error("SendGrid error:", error);
+    throw error;
+  }
 };
