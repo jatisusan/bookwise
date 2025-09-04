@@ -196,8 +196,8 @@ const FileUpload = ({
           <Image
             alt={file}
             src={file}
-            transformation={[{ width: 100, height: 300 }]}
-            width={500}
+            transformation={[{ width: 500, height: 300 }]}
+            width={1000}
             height={300}
           />
         ) : type === "video" ? (

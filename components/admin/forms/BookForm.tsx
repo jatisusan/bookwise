@@ -20,6 +20,7 @@ import { bookSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import FileUpload from "@/components/FileUpload";
 import ColorPicker from "../ColorPicker";
+import { createBook } from "@/lib/admin/actions/book";
 
 interface Props extends Partial<Book> {
   type: "create" | "update";
@@ -47,7 +48,14 @@ const BookForm = ({ type, ...book }: Props) => {
 
   // 2. Define a submit handler.
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
-    console.log(values);
+    const result = await createBook(values);
+
+    if(result.success) {
+      toast.success("Book added successfully!");
+      router.push(`/admin/books/${result.data.id}`);
+    } else {
+      toast.error(result.message || "Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -210,7 +218,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   <Textarea
                     placeholder="Book description"
                     {...field}
-                    rows={10}
+                    rows={5}
                     className="book-form_input"
                   />
                 </FormControl>
@@ -253,7 +261,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   <Textarea
                     placeholder="Book summary"
                     {...field}
-                    rows={5}
+                    rows={10}
                     className="book-form_input"
                   />
                 </FormControl>
@@ -262,7 +270,7 @@ const BookForm = ({ type, ...book }: Props) => {
             )}
           />
 
-          <Button type="submit" className="book-form_btn bg-primary-admin">
+          <Button type="submit" className="book-form_btn bg-primary-admin hover:bg-primary-admin/90">
             Add book to library
           </Button>
         </form>
