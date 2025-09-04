@@ -32,9 +32,9 @@ export const signInWithCredentials = async (
     }
 
     return { success: true };
-  } catch (error) {
-    console.log(error, "Signin error");
-    return { success: false, error: "Signin error. Please try again." };
+  } catch (error: any) {
+    const cleanedError = error.message.split(" Read more at")[0];
+    return { success: false, error: cleanedError || "Something went wrong" };
   }
 };
 

@@ -202,11 +202,11 @@
 
   /* File Upload */
   .upload-btn {
-    @apply flex min-h-14 px-4 w-full items-center justify-center gap-1.5 rounded-md bg-dark-300 cursor-pointer;
+    @apply flex min-h-14 px-4 w-full items-center justify-center! gap-1.5 rounded-md bg-dark-300 cursor-pointer;
   }
 
   .upload-filename {
-    @apply mt-1 text-center text-xs line-clamp-1;
+    @apply text-center text-xs w-[40%] overflow-hidden text-ellipsis ml-10;
   }
 
   .progress {
@@ -411,14 +411,14 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
-@layer base {
+/* @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-dark-100 text-foreground;
   }
-}
+} */
 
 html,
 body {

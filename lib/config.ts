@@ -14,11 +14,6 @@ const config = {
       qstashUrl: process.env.QSTASH_URL!,
       qstashToken: process.env.QSTASH_TOKEN!,
     },
-    emailjs: {
-      serviceId: process.env.EMAILJS_SERVICE_ID!,
-      templateId: process.env.EMAILJS_TEMPLATE_ID!,
-      publicKey: process.env.EMAILJS_PUBLIC_KEY!,
-    },
     sendGrid:{
       apiKey: process.env.SENDGRID_API_KEY!,
       fromEmail: process.env.SENDGRID_FROM_EMAIL!,

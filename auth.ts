@@ -1,4 +1,4 @@
-import NextAuth, { User } from "next-auth";
+import NextAuth, { AuthError, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "./database/drizzle";
 import { users } from "./database/schema";
@@ -21,13 +21,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           .limit(1);
 
           if(user.length === 0) {
-            return null;
+            throw new AuthError("No account found with this email");
           }
 
           const isPasswordValid = await compare(credentials.password.toString(), user[0].password);
 
           if(!isPasswordValid) {
-            return null;
+            throw new AuthError("Incorrect password");
           }
 
           return {

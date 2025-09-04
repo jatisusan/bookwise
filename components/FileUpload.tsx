@@ -1,7 +1,8 @@
 "use client";
 
 import config from "@/lib/config";
-import { Image, ImageKitProvider, upload } from "@imagekit/next";
+import { cn } from "@/lib/utils";
+import { Image, ImageKitProvider, upload, Video } from "@imagekit/next";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -34,15 +35,69 @@ const authenticator = async () => {
   }
 };
 
-const ImageUpload = ({
-  onFileChange,
-}: {
+interface Props {
   onFileChange: (filePath: string) => void;
-}) => {
+  type: "image" | "video";
+  placeholder: string;
+  accept: string;
+  folder: string;
+  variant: "dark" | "light";
+  value?: string;
+}
+
+const FileUpload = ({
+  onFileChange,
+  type,
+  placeholder,
+  accept,
+  folder,
+  variant,
+  value
+}: Props) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [file, setFile] = useState<{ filePath: string } | null>(null);
+  const [file, setFile] = useState<string | null>(value ?? null );
 
   const [progress, setProgress] = useState(0);
+
+  const styles = {
+    button:
+      variant === "dark"
+        ? "bg-dark-300"
+        : "bg-light-600 border border-gray-100",
+    placeholder: variant === "dark" ? "text-light-100" : "text-slate-500",
+    text: variant === "dark" ? "text-light-100" : "text-dark-400",
+  };
+
+  const validator = (file: File) => {
+    // Validate file type using accept prop
+    if (accept) {
+      const acceptedTypes = accept.split(",").map((type) => type.trim());
+      const isTypeValid = acceptedTypes.some(
+        (type) =>
+          type === file.type ||
+          (type.endsWith("/*") &&
+            file.type.startsWith(type.split("/")[0] + "/"))
+      );
+      if (!isTypeValid) {
+        toast.error(`Invalid file type. Allowed: ${accept}`);
+        return false;
+      }
+    }
+
+    // Validate file size
+    if (type === "image") {
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error("Image size should be less than 10MB");
+        return false;
+      }
+    } else if (type === "video") {
+      if (file.size > 50 * 1024 * 1024) {
+        toast.error("Video size should be less than 50MB");
+        return false;
+      }
+    }
+    return true;
+  };
 
   const handleUpload = async () => {
     // Access the file input element using the ref
@@ -54,6 +109,9 @@ const ImageUpload = ({
 
     // Extract the first file from the file input
     const selectedFile = fileInput.files[0];
+
+    // Validate file size
+    if (!validator(selectedFile)) return;
 
     // Retrieve authentication parameters for the upload.
     let authParams;
@@ -75,18 +133,20 @@ const ImageUpload = ({
         publicKey,
         file: selectedFile,
         fileName: selectedFile.name,
+        folder,
+        useUniqueFileName: true,
         onProgress: (event) => {
-          setProgress((event.loaded / event.total) * 100);
+          setProgress(Math.round((event.loaded / event.total) * 100));
         },
       });
       if (uploadResponse.url && uploadResponse.filePath) {
-        setFile({ filePath: uploadResponse.filePath });
+        setFile(uploadResponse.filePath);
         onFileChange(uploadResponse.filePath);
-        toast.success("Image uploaded successfully");
+        toast.success(`${type} uploaded successfully`);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Image upload failed");
+      toast.error(`${type} upload failed`);
     }
   };
 
@@ -101,7 +161,7 @@ const ImageUpload = ({
       {/* Button to trigger the upload process */}
       <button
         type="button"
-        className="upload-btn"
+        className={cn("upload-btn", styles.button)}
         onClick={(e) => {
           e.preventDefault();
           // @ts-ignore
@@ -116,26 +176,39 @@ const ImageUpload = ({
           className="object-contain"
         />
 
-        <p className={"text-base"}>Upload</p>
+        <p className={cn("text-base", styles.placeholder)}>{placeholder}</p>
 
-        {file && <p className={"upload-filename"}>{file.filePath}</p>}
+        {file && (
+          <p className={cn("upload-filename", styles.text)}>{file}</p>
+        )}
       </button>
 
-      {progress > 0 && progress < 100 && (
-        <progress value={progress} max={100}></progress>
+      {progress > 0 && progress !== 100 && (
+        <div className="w-full rounded-full bg-green-200">
+          <div className="progress" style={{ width: `${progress}%` }}>
+            {progress}%
+          </div>
+        </div>
       )}
 
-      {file && (
-        <Image
-          alt={file.filePath}
-          src={file.filePath}
-          transformation={[{ width: 500, height: 300 }]}
-          width={500}
-          height={300}
-        />
-      )}
+      {file &&
+        (type === "image" ? (
+          <Image
+            alt={file}
+            src={file}
+            transformation={[{ width: 100, height: 300 }]}
+            width={500}
+            height={300}
+          />
+        ) : type === "video" ? (
+          <Video
+            src={file}
+            controls
+            className="w-full h-96 rounded-xl"
+          />
+        ) : null)}
     </ImageKitProvider>
   );
 };
 
-export default ImageUpload;
+export default FileUpload;
