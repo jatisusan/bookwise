@@ -11,13 +11,13 @@ const Header = ({ session }: { session: Session }) => {
     <header className="mb-10 mt-8 flex justify-between gap-5">
       <Link href={"/"} className="flex gap-2 items-center">
         <Image src={"/icons/logo.svg"} alt="logo" width={40} height={40} />
-        <p className="text-white text-2xl font-semibold">BookWise</p>
+        <p className="text-white sm:text-2xl text-xl font-semibold">BookWise</p>
       </Link>
 
-      <ul className="flex flex-row items-center gap-8">
+      <ul className="flex flex-row items-center sm:gap-8 gap-4">
         <li>
           <Link
-            href={"/library"}
+            href={"/books"}
             className="text-base cursor-pointer capitalize text-light-100"
           >
             Library

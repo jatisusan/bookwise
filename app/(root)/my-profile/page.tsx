@@ -32,7 +32,7 @@ const page = async () => {
   return (
     <div className="w-full flex lg:flex-row flex-col justify-between gap-20">
       <UserCard userId={session?.user?.id as string} />
-      <div>
+      <div className={`${myBooks.length < 1 && "lg:flex-1"}`}>
         <h2 className="text-4xl font-bebas-neue text-light-100 mb-3">
           Borrowed Books
         </h2>
@@ -120,7 +120,9 @@ const page = async () => {
             ))}
           </ul>
         ) : (
-          <p>No borrowed books.</p>
+          <p className="text-light-100 text-xl">
+            You haven't borrowed any books.
+          </p>
         )}
       </div>
     </div>
