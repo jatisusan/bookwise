@@ -134,7 +134,7 @@
 
   /* Borrowed Book */
   .borrowed-book {
-    @apply gradient-vertical p-5 rounded-2xl xs:w-min w-full relative;
+    @apply gradient-vertical p-5 rounded-2xl w-full relative;
   }
 
   .borrowed-book_cover {

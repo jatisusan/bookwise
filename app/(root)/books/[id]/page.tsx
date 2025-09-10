@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import BookOverview from "@/components/BookOverview";
 import BookVideo from "@/components/BookVideo";
 import { db } from "@/database/drizzle";
@@ -16,9 +17,11 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   if (!bookDetails) redirect("/404");
 
+  const session = await auth();
+
   return (
     <>
-      <BookOverview {...bookDetails} />
+      <BookOverview {...bookDetails} userId={session?.user?.id as string}  />
 
       <div className="book-details">
         <div className="flex-[1.5]">
