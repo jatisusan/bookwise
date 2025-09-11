@@ -89,7 +89,7 @@
 
 @utility book-details {
   h3 {
-    @apply text-xl lg:text-3xl font-semibold text-primary-default;
+    @apply text-xl lg:text-3xl font-semibold text-light-100;
   }
 }
 
@@ -99,11 +99,11 @@
 }
 
 @utility library-subtitle {
-  @apply text-lg font-semibold uppercase text-light-100;
+  @apply uppercase text-sm text-light-100 font-semibold tracking-widest mb-3;
 }
 
 @utility library-title {
-  @apply mt-2 text-3xl font-semibold text-white xs:text-5xl;
+  @apply text-4xl md:text-5xl font-bold text-white capitalize max-w-xl text-center leading-12 md:leading-15;
 }
 
 @layer components {
@@ -147,7 +147,7 @@
   }
 
   .book-cover_small {
-    @apply w-[55px] h-[76px];
+    @apply md:w-[128px] md:h-[176px] w-[100px] h-[136px];
   }
 
   .book-cover_medium {

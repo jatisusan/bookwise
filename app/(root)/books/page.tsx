@@ -21,12 +21,12 @@ const page = async ({
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
-        <p className="uppercase text-sm text-light-100 font-semibold tracking-widest mb-3">
+      <div className="library">
+        <p className="library-subtitle">
           Discover your next great read
         </p>
 
-        <h2 className="text-4xl md:text-5xl font-bold text-white capitalize max-w-xl text-center leading-12 md:leading-15">
+        <h2 className="library-title">
           Explore and search for{" "}
           <span className="text-primary-default">any book</span> in our library
         </h2>
