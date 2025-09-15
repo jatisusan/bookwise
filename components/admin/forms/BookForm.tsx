@@ -20,8 +20,7 @@ import { bookSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import FileUpload from "@/components/FileUpload";
 import ColorPicker from "../ColorPicker";
-import { createBook } from "@/lib/admin/actions/book";
-import { useEffect } from "react";
+import { createBook, updateBook } from "@/lib/admin/actions/book";
 
 interface Props extends Partial<Book> {
   type: "create" | "update";
@@ -44,26 +43,34 @@ const BookForm = ({ type, ...book }: Props) => {
       coverColor: "",
       videoUrl: "",
       summary: "",
-      ...book
+      ...book,
     },
   });
 
-//   useEffect(() => {
-//   if (type === "update" && book) {
-//     form.reset(book);
-//   }
-// }, [type, book, form]);
- 
-
   // 2. Define a submit handler.
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
-    const result = await createBook(values);
+    if (type === "update" && book.id) {
+      const result = await updateBook(book.id, values);
 
-    if(result.success) {
-      toast.success("Book added successfully!");
-      router.push(`/admin/books/${result.data.id}`);
+      if (result.success) {
+        toast.success("Book updated successfully!");
+        router.push(`/admin/books/${result.data.id}`);
+      } else {
+        toast.error(
+          result.message || "Something went wrong. Please try again."
+        );
+      }
     } else {
-      toast.error(result.message || "Something went wrong. Please try again.");
+      const result = await createBook(values);
+
+      if (result.success) {
+        toast.success("Book added successfully!");
+        router.push(`/admin/books/${result.data.id}`);
+      } else {
+        toast.error(
+          result.message || "Something went wrong. Please try again."
+        );
+      }
     }
   };
 
@@ -209,7 +216,10 @@ const BookForm = ({ type, ...book }: Props) => {
                   Primary Color
                 </FormLabel>
                 <FormControl>
-                  <ColorPicker onPickerChange={field.onChange} value={field.value}/>
+                  <ColorPicker
+                    onPickerChange={field.onChange}
+                    value={field.value}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -279,8 +289,11 @@ const BookForm = ({ type, ...book }: Props) => {
             )}
           />
 
-          <Button type="submit" className="book-form_btn bg-primary-admin hover:bg-primary-admin/90">
-            Add book to library
+          <Button
+            type="submit"
+            className="book-form_btn bg-primary-admin hover:bg-primary-admin/90"
+          >
+            {type === "create" ? "Add book to library" : "Update Book"}
           </Button>
         </form>
       </Form>
