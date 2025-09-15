@@ -5,13 +5,28 @@ import Image from "next/image";
 import Link from "next/link";
 import CommonModal from "../CommonModal";
 import BookCover from "@/components/BookCover";
+import { ArrowUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const bookColumns: ColumnDef<BookTable>[] = [
   {
     accessorKey: "title",
-    header: "Book Title",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Book Title
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => (
-      <div className="flex gap-2 items-center">
+      <Link
+        href={`/admin/books/${row.original.id}`}
+        className="flex gap-2 items-center"
+      >
         <BookCover
           variant="extraSmall"
           coverColor={row.original.coverColor}
@@ -20,7 +35,7 @@ export const bookColumns: ColumnDef<BookTable>[] = [
         <p className="text-dark-400 font-medium text-sm">
           {row.original.title}
         </p>
-      </div>
+      </Link>
     ),
   },
   {
@@ -52,7 +67,7 @@ export const bookColumns: ColumnDef<BookTable>[] = [
       const book = row.original;
 
       return (
-        <div className="flex gap-2">
+        <div className="flex gap-4 px-1">
           <Link href={`/admin/books/${book.id}/update`}>
             <Image
               src="/icons/admin/edit.svg"

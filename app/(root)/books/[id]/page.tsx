@@ -1,7 +1,5 @@
 import { auth } from "@/auth";
-import BookCard from "@/components/BookCard";
 import BookCover from "@/components/BookCover";
-import BookList from "@/components/BookList";
 import BookOverview from "@/components/BookOverview";
 import BookVideo from "@/components/BookVideo";
 import { db } from "@/database/drizzle";

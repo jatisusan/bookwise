@@ -21,6 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import FileUpload from "@/components/FileUpload";
 import ColorPicker from "../ColorPicker";
 import { createBook } from "@/lib/admin/actions/book";
+import { useEffect } from "react";
 
 interface Props extends Partial<Book> {
   type: "create" | "update";
@@ -43,8 +44,16 @@ const BookForm = ({ type, ...book }: Props) => {
       coverColor: "",
       videoUrl: "",
       summary: "",
+      ...book
     },
   });
+
+//   useEffect(() => {
+//   if (type === "update" && book) {
+//     form.reset(book);
+//   }
+// }, [type, book, form]);
+ 
 
   // 2. Define a submit handler.
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
