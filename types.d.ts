@@ -13,7 +13,6 @@ interface Book {
   summary: string;
 }
 
-
 interface AuthCredentials {
   fullName: string;
   email: string;
@@ -38,4 +37,20 @@ interface BookParams {
 interface BorrowBookParams {
   bookId: string;
   userId: string;
+}
+
+interface BookTable {
+  id: string;
+  title: string;
+  author: string;
+  genre: string;
+  rating: number;
+  totalCopies: number;
+  availableCopies: number;
+  description: string;
+  coverColor: string;
+  coverUrl: string;
+  videoUrl: string;
+  summary: string;
+  createdAt: Date | null;
 }

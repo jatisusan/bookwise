@@ -48,7 +48,6 @@
   --font-bebas-neue: var(--bebas-neue), sans-serif;
 }
 
-
 @layer components {
   .admin-container {
     @apply flex w-[calc(100%-264px)] flex-1 flex-col bg-light-300 p-5 xs:p-10;
@@ -93,12 +92,12 @@
   }
 
   .book-form_btn {
-    @apply min-h-14 w-full bg-primary-admin hover:bg-primary-admin/95 ;
+    @apply min-h-14 w-full bg-primary-admin hover:bg-primary-admin/95;
   }
 
   /* Home Page */
   .view-btn {
-    @apply bg-light-300 rounded-md text-primary-admin font-semibold hover:bg-light-300/80 shadow-none ;
+    @apply bg-light-300 rounded-md text-primary-admin font-semibold hover:bg-light-300/80 shadow-none;
   }
 
   .add-new-book_btn {
@@ -208,7 +207,7 @@
   }
 
   .admin-search_input {
-    @apply w-full border-0 shadow-none bg-transparent outline-none focus:outline-none focus:ring-0 focus:border-0 ;
+    @apply w-full border-0 shadow-none bg-transparent outline-none focus:outline-none focus:ring-0 focus:border-0;
   }
 
   /* Sidebar */
@@ -248,4 +247,17 @@
   .user-card .email {
     @apply text-light-500 text-sm line-clamp-1 break-words w-full;
   }
+
+
+  .shad-table {
+		@apply border-0 rounded-lg overflow-hidden;
+	}
+
+	.shad-table-row-header {
+		@apply  text-green-500! hover:bg-transparent;
+	}
+
+	.shad-table-row {
+		@apply border-b border-dark-400 text-light-200;
+	}
 }
