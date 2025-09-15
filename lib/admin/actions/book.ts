@@ -36,3 +36,18 @@ export const updateBook = async (id: string, params: Partial<Book>) => {
     return { success: false, message: "Failed to update book." };
   }
 };
+
+
+export const deleteBook = async (id: string) => {
+  try {
+    const deletedBook = await db
+      .delete(books)
+      .where(eq(books.id, id))
+      .returning();
+
+    return { success: true, data: JSON.parse(JSON.stringify(deletedBook[0])) };
+  } catch (error) {
+    console.log("Error deleting book:", error);
+    return { success: false, message: "Failed to delete book." };
+  }
+};

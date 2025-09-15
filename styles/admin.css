@@ -247,17 +247,4 @@
   .user-card .email {
     @apply text-light-500 text-sm line-clamp-1 break-words w-full;
   }
-
-
-  .shad-table {
-		@apply border-0 rounded-lg overflow-hidden;
-	}
-
-	.shad-table-row-header {
-		@apply  text-green-500! hover:bg-transparent;
-	}
-
-	.shad-table-row {
-		@apply border-b border-dark-400 text-light-200;
-	}
 }

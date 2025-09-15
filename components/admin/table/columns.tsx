@@ -7,6 +7,9 @@ import CommonModal from "../CommonModal";
 import BookCover from "@/components/BookCover";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { deleteBook } from "@/lib/admin/actions/book";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export const bookColumns: ColumnDef<BookTable>[] = [
   {
@@ -65,6 +68,7 @@ export const bookColumns: ColumnDef<BookTable>[] = [
     header: "Actions",
     cell: ({ row }) => {
       const book = row.original;
+      const router = useRouter();
 
       return (
         <div className="flex gap-4 px-1">
@@ -76,7 +80,16 @@ export const bookColumns: ColumnDef<BookTable>[] = [
               height={18}
             />
           </Link>
-          <CommonModal />
+          <CommonModal
+            type="delete"
+            onConfirm={async () => {
+              const result = await deleteBook(book.id);
+              if (result.success) {
+                toast.success("Book deleted successfully");
+                router.refresh();
+              } else toast.error(result.message);
+            }}
+          />
         </div>
       );
     },
