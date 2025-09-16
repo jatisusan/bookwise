@@ -9,7 +9,7 @@ const page = async () => {
   const result = await db.select().from(books).orderBy(desc(books.createdAt));
   return (
     <section className="p-7 w-full rounded-2xl bg-white">
-      <DataTable columns={bookColumns} data={result} title="All Books" addBtn />
+      <DataTable columns={bookColumns} data={result} title="All Books" addBtn searchColumn="title" />
     </section>
   );
 };

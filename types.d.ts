@@ -54,3 +54,16 @@ interface BookTable {
   summary: string;
   createdAt: Date | null;
 }
+
+interface UserTable {
+  id: string;
+  fullName: string;
+  email: string;
+  universityId: number;
+  universityCard: string;
+  role: "USER" | "ADMIN" | null;
+  createdAt: Date | null;
+  status: "PENDING" | "APPROVED" | "REJECTED" | null;
+  lastActivityDate: string | null;
+  borrowedBooks: number;
+}

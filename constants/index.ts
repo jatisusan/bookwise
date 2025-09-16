@@ -244,13 +244,13 @@ export const sorts = [
 
 export const userRoles = [
   {
-    value: "user",
+    value: "USER",
     label: "User",
     bgColor: "bg-[#FDF2FA]",
     textColor: "text-[#C11574]",
   },
   {
-    value: "admin",
+    value: "ADMIN",
     label: "Admin",
     bgColor: "bg-[#ECFDF3]",
     textColor: "text-[#027A48]",
@@ -276,4 +276,17 @@ export const borrowStatuses = [
     bgColor: "bg-[#F0F9FF]",
     textColor: "text-[#026AA2]",
   },
+];
+
+export const pastelColors = [
+   "#FEF3C7", // soft amber (between amber-100 and amber-200)
+  "#DBEAFE", // soft blue
+  "#E0E7FF", // soft indigo
+  "#FCE7F3", // soft pink
+  "#D1FAE5", // soft emerald
+  "#FECACA", // soft red
+  "#FED7AA", // soft orange
+  "#EDE9FE", // soft violet
+  "#F3E8FF", // soft purple
+  "#CCFBF1", // soft teal
 ];

@@ -30,6 +30,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   title: string;
   addBtn?: boolean;
+  searchColumn: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -37,6 +38,7 @@ export function DataTable<TData, TValue>({
   data,
   title,
   addBtn = false,
+  searchColumn,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -64,10 +66,10 @@ export function DataTable<TData, TValue>({
 
         <div className="flex items-center gap-4">
           <Input
-            placeholder="Search books..."
-            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+            placeholder="Search ..."
+            value={(table.getColumn(searchColumn)?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("title")?.setFilterValue(event.target.value)
+              table.getColumn(searchColumn)?.setFilterValue(event.target.value)
             }
             className="max-w-sm focus-visible:ring-0 focus-visible:shadow-none outline-none"
           />
