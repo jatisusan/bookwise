@@ -79,3 +79,18 @@ interface AccountTable {
   status: "PENDING" | "APPROVED" | "REJECTED" | null;
   lastActivityDate: string | null;
 }
+
+interface BorrowTable {
+  id: string;
+  bookId: string;
+  createdAt: Date | null;
+  status: "BORROWED" | "RETURNED" | null;
+  bookTitle: string;
+  bookCoverUrl: string;
+  bookCoverColor: string;
+  userFullName: string;
+  userEmail: string;
+  borrowDate: Date;
+  returnDate: string | null;
+  dueDate: string | null;
+}

@@ -36,13 +36,13 @@ export const sendEmail = async ({
       html: `
             <div style="background:#111624; padding:30px; font-family:Arial, sans-serif; color:#ffffff; max-width:600px; margin:0 auto; border-radius:8px;">
               <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px;">
-                <img src="https://bookwise-sb.vercel.app/icons/logo.png" alt="BookWise logo" width="36" style="display:block; " />
+                <img src="https://bookwise-sb.vercel.app/icons/logo.svg" alt="logo" width="36" style="display:block; border:0; outline:none; text-decoration:none;" />
                 <div style="font-weight:700; font-size:18px; line-height:1; color:#ffffff;">BookWise</div>
               </div>
               <div style="height:1px; background:#202534; margin:0 0 18px;"></div>
               <h1 style="font-size:20px; margin:0 0 15px;">${title}</h1><br>
               <p style="font-size:15px; line-height:1.6; color:#d1d5db;">Hi ${name},<br><br>${message}<br><br></p>
-              <a href="https://bookwise-sb.vercel.app" style="display:inline-block; background:#e7c9a5; color:#ffffff; font-weight:bold; padding:12px 24px; border-radius:6px; text-decoration:none; font-size:14px; margin:15px 0;">Open BookWise</a>
+              <a href="https://bookwise-sb.vercel.app" style="display:inline-block; background:#e7c9a5; color:#111624; font-weight:bold; padding:12px 24px; border-radius:6px; text-decoration:none; font-size:14px; margin:15px 0;">Open BookWise</a>
               <p style="font-size:14px; line-height:1.6; color:#d1d5db; margin-top:20px;">Happy reading,<br>The BookWise Team</p> 
             </div>
       `,

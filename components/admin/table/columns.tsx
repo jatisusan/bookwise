@@ -217,6 +217,115 @@ export const userColumns: ColumnDef<UserTable>[] = [
   },
 ];
 
+export const borrowColumns: ColumnDef<BorrowTable>[] = [
+  {
+    accessorKey: "fullName",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="flex gap-4">
+        <Avatar>
+          <AvatarFallback
+            style={{
+              backgroundColor: stringToColor(row.original.userFullName),
+            }}
+          >
+            {getInitials(row.original.userFullName)}
+          </AvatarFallback>
+        </Avatar>
+        <div className="max-w-40">
+          <p className="text-dark-100  font-semibold truncate">
+            {row.original.userFullName}
+          </p>
+          <p className="text-slate-500 truncate">{row.original.userEmail}</p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "bookTitle",
+    header: "Book",
+    cell: ({ row }) => (
+      <Link
+        href={`/admin/books/${row.original.bookId}`}
+        className="flex gap-2 items-center"
+      >
+        <BookCover
+          variant="extraSmall"
+          coverColor={row.original.bookCoverColor}
+          coverImage={row.original.bookCoverUrl}
+        />
+        <p className="text-dark-400 font-medium text-sm max-w-36 truncate">
+          {row.original.bookTitle}
+        </p>
+      </Link>
+    ),
+  },
+  {
+    accessorKey: "status",
+    header: () => <p className="ml-2">Status</p>,
+    cell: ({ row }) => (
+      <Dropdown
+        type="borrowStatus"
+        currentValue={row.original.status!}
+        id={row.original.id}
+      />
+    ),
+  },
+  {
+    accessorKey: "borrowedDate",
+    header: "Borrowed Date",
+    cell: ({ row }) => (
+      <p className="text-dark-200">
+        {row.original.borrowDate?.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })}
+      </p>
+    ),
+  },
+  {
+    accessorKey: "dueDate",
+    header: "Due Date",
+    cell: ({ row }) => (
+      <p className="text-dark-200">
+        {row.original.dueDate
+          ? new Date(row.original.dueDate).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })
+          : "-"}
+      </p>
+    ),
+  },
+  {
+    accessorKey: "returnDate",
+    header: "Return Date",
+    cell: ({ row }) => (
+      <p className="text-dark-200">
+        {row.original.returnDate
+          ? new Date(row.original.returnDate).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })
+          : "-"}
+      </p>
+    ),
+  },
+];
+
 export const accountColumns: ColumnDef<AccountTable>[] = [
   {
     accessorKey: "fullName",

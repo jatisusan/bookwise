@@ -52,7 +52,7 @@ const Dropdown = <T extends "userRole" | "borrowStatus">({
       console.error(error);
       toast.error(error);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -70,7 +70,7 @@ const Dropdown = <T extends "userRole" | "borrowStatus">({
           {current?.label}
         </Badge>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-32">
+      <DropdownMenuContent className={type === "userRole" ? "w-32" : "w-40"}>
         <DropdownMenuRadioGroup value={value} onValueChange={handleChange}>
           {items.map((i) => (
             <DropdownMenuRadioItem key={i.value} value={i.value}>
