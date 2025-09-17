@@ -1,8 +1,9 @@
 "use server";
 
 import { db } from "@/database/drizzle";
-import { books } from "@/database/schema";
+import { books, borrowRecords } from "@/database/schema";
 import { eq } from "drizzle-orm";
+import dayjs from "dayjs";
 
 export const createBook = async (params: BookParams) => {
   try {
@@ -21,7 +22,6 @@ export const createBook = async (params: BookParams) => {
   }
 };
 
-
 export const updateBook = async (id: string, params: Partial<Book>) => {
   try {
     const updatedBook = await db
@@ -37,7 +37,6 @@ export const updateBook = async (id: string, params: Partial<Book>) => {
   }
 };
 
-
 export const deleteBook = async (id: string) => {
   try {
     const deletedBook = await db
@@ -49,5 +48,37 @@ export const deleteBook = async (id: string) => {
   } catch (error) {
     console.log("Error deleting book:", error);
     return { success: false, message: "Failed to delete book." };
+  }
+};
+
+export const changeBorrowStatus = async (
+  id: string,
+  status: "REQUESTED" | "BORROWED" | "RETURNED" | "OVERDUE"
+) => {
+  try {
+    let updates: any = { status };
+
+    if (status === "BORROWED") {
+      updates.borrowDate = dayjs().toDate();
+      updates.dueDate = dayjs().add(7, "day").toDate();
+      updates.returnDate = null;
+    }
+    if (status === "RETURNED" || status === "OVERDUE") {
+      updates.returnDate = dayjs().toDate();
+    }
+
+    const updatedRecord = await db
+      .update(borrowRecords)
+      .set(updates)
+      .where(eq(borrowRecords.id, id))
+      .returning();
+
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(updatedRecord[0])),
+    };
+  } catch (error) {
+    console.log("Error updating borrow status:", error);
+    return { success: false, message: "Failed to update borrow status." };
   }
 };

@@ -219,7 +219,7 @@ export const userColumns: ColumnDef<UserTable>[] = [
 
 export const borrowColumns: ColumnDef<BorrowTable>[] = [
   {
-    accessorKey: "fullName",
+    accessorKey: "userFullName",
     header: ({ column }) => {
       return (
         <Button
@@ -286,11 +286,13 @@ export const borrowColumns: ColumnDef<BorrowTable>[] = [
     header: "Borrowed Date",
     cell: ({ row }) => (
       <p className="text-dark-200">
-        {row.original.borrowDate?.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        })}
+        {row.original.borrowDate
+          ? new Date(row.original.borrowDate).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })
+          : "-"}
       </p>
     ),
   },

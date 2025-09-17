@@ -84,13 +84,13 @@ interface BorrowTable {
   id: string;
   bookId: string;
   createdAt: Date | null;
-  status: "BORROWED" | "RETURNED" | null;
+  status: "REQUESTED" | "BORROWED" | "RETURNED" | "OVERDUE" | null;
   bookTitle: string;
   bookCoverUrl: string;
   bookCoverColor: string;
   userFullName: string;
   userEmail: string;
-  borrowDate: Date;
+  borrowDate: string | null;
   returnDate: string | null;
   dueDate: string | null;
 }

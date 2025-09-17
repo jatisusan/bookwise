@@ -259,10 +259,10 @@ export const userRoles = [
 
 export const borrowStatuses = [
   {
-    value: "OVERDUE",
-    label: "Overdue",
-    bgColor: "bg-[#FFF1F3]",
-    textColor: "text-[#C01048]",
+    value: "REQUESTED",
+    label: "Requested",
+    bgColor: "bg-[#E6F0FF]",
+    textColor: "text-[#0056B3]",
   },
   {
     value: "BORROWED",
@@ -275,6 +275,12 @@ export const borrowStatuses = [
     label: "Returned",
     bgColor: "bg-[#F0F9FF]",
     textColor: "text-[#026AA2]",
+  },
+   {
+    value: "OVERDUE",
+    label: "Late Return",
+    bgColor: "bg-[#FFF1F3]",
+    textColor: "text-[#C01048]",
   },
 ];
 

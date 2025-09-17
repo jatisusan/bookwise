@@ -14,6 +14,8 @@ import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { changeUserRole } from "@/lib/admin/actions/user";
+import { changeBorrowStatus } from "@/lib/admin/actions/book";
+import { useRouter } from "next/navigation";
 
 interface BaseProps<T extends "userRole" | "borrowStatus"> {
   type: T;
@@ -22,7 +24,7 @@ interface BaseProps<T extends "userRole" | "borrowStatus"> {
 }
 
 type ROLE_ENUM = "USER" | "ADMIN";
-type BORROW_STATUS_ENUM = "BORROWED" | "RETURNED";
+type BORROW_STATUS_ENUM = "REQUESTED" | "BORROWED" | "RETURNED" | "OVERDUE";
 
 const Dropdown = <T extends "userRole" | "borrowStatus">({
   type,
@@ -31,6 +33,7 @@ const Dropdown = <T extends "userRole" | "borrowStatus">({
 }: BaseProps<T>) => {
   const [value, setValue] = useState(currentValue);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const items = type === "userRole" ? userRoles : borrowStatuses;
 
@@ -42,11 +45,18 @@ const Dropdown = <T extends "userRole" | "borrowStatus">({
       : BORROW_STATUS_ENUM;
     setValue(val);
     setLoading(true);
+
     try {
       if (type === "userRole") {
         const result = await changeUserRole(id, val as ROLE_ENUM);
         if (result.success) toast.success("User updated successfully.");
         else toast.error(result.message);
+      } else {
+        const result = await changeBorrowStatus(id, val as BORROW_STATUS_ENUM);
+        if (result.success) {
+          toast.success("Borrow status updated successfully.");
+          router.refresh();
+        } else toast.error(result.message);
       }
     } catch (error: any) {
       console.error(error);

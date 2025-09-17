@@ -249,9 +249,9 @@
   }
 }
 @utility green-badge {
-  @apply rounded-full px-3 py-1 font-medium text-sm bg-[#ECFDF3] text-[#027A48];
+  @apply rounded-full! px-3 py-1 font-medium text-sm bg-[#ECFDF3] text-[#027A48];
 }
 
 @utility red-badge {
-  @apply rounded-full px-3 py-1 font-medium text-sm bg-[#FDF2FA] text-[#C11574];
+  @apply rounded-full! px-3 py-1 font-medium text-sm bg-[#FDF2FA] text-[#C11574];
 }

@@ -3,7 +3,6 @@
 import { db } from "@/database/drizzle";
 import { books, borrowRecords } from "@/database/schema";
 import { eq } from "drizzle-orm";
-import dayjs from "dayjs";
 
 export const borrowBook = async (params: BorrowBookParams) => {
   const { bookId, userId } = params;
@@ -18,13 +17,10 @@ export const borrowBook = async (params: BorrowBookParams) => {
       return { success: false, error: "Book not available for borrowing" };
     }
 
-    const dueDate = dayjs().add(7, "day").toDate().toDateString();
-
     const record = await db.insert(borrowRecords).values({
       bookId,
       userId,
-      dueDate,
-      status: "BORROWED",
+      status: "REQUESTED",
     });
 
     await db
@@ -38,4 +34,3 @@ export const borrowBook = async (params: BorrowBookParams) => {
     return { success: false, error: "Failed to borrow book" };
   }
 };
-

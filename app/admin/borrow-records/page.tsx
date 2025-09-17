@@ -24,7 +24,7 @@ const page = async () => {
         columns={borrowColumns}
         data={result}
         title="Borrow Requests"
-        searchColumn="fullName"
+        searchColumn="userFullName"
       />
     </section>
   );
