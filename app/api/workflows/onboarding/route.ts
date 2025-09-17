@@ -38,6 +38,7 @@ export const { POST } = serve<InitialData>(async (context) => {
 
   await context.run("new-signup", async () => {
     await sendEmail({
+      name: fullName,
       email,
       subject: "Welcome to Bookwise",
       title: `Hello ${fullName}, welcome to our platform!`,
@@ -55,6 +56,7 @@ export const { POST } = serve<InitialData>(async (context) => {
     if (state === "non-active") {
       await context.run("send-email-non-active", async () => {
         await sendEmail({
+          name: fullName,
           email,
           title: "We miss you at Bookwise!",
           subject: "We miss you at Bookwise!",
@@ -64,6 +66,7 @@ export const { POST } = serve<InitialData>(async (context) => {
     } else if (state === "active") {
       await context.run("send-email-active", async () => {
         await sendEmail({
+          name: fullName,
           email,
           subject: "Welcome back to Bookwise!",
           title: `Welcome back, ${fullName}!`,

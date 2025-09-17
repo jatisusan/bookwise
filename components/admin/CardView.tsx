@@ -12,9 +12,9 @@ import { Image } from "@imagekit/next";
 const CardView = ({ universityCard }: { universityCard: string }) => {
   return (
     <Dialog>
-      <DialogTrigger className="flex cursor-pointer gap-2 items-center">
+      <DialogTrigger className="flex cursor-pointer gap-1 items-center">
         <p className="text-blue-100 font-medium">View ID Card</p>
-        <img src="/icons/admin/link.svg" alt="link" className="w-4 h-4" />
+        <img src="/icons/admin/link.svg" alt="link" className="w-3 h-3" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

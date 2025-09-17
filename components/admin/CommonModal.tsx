@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import { Badge } from "../ui/badge";
 
 interface Props {
   type: "delete" | "approve" | "deny";
@@ -22,7 +23,9 @@ const CommonModal = ({ type, onConfirm }: Props) => {
       <Dialog>
         <DialogTrigger className="cursor-pointer">
           {type === "approve" ? (
-            <p>Approve Account</p>
+            <Badge className="rounded-full px-3 py-1 font-medium text-sm cursor-pointer bg-[#e3ffee] text-[#017444]">
+              Approve Account
+            </Badge>
           ) : (
             <Image
               src={
@@ -69,7 +72,7 @@ const CommonModal = ({ type, onConfirm }: Props) => {
             </DialogTitle>
             <DialogDescription className="text-base text-slate-600 text-center">
               {type === "delete"
-                ? "This action cannot be undone. This will permanently delete the selected book."
+                ? "This action cannot be undone. This will permanently delete the selected item."
                 : type === "approve"
                 ? "Approve the student's account request and grant access. A confirmation email will be sent upon approval."
                 : "Denying this request will notify the student they are not eligible due to unsuccessful ID card verification."}

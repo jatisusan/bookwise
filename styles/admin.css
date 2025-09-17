@@ -248,3 +248,10 @@
     @apply text-light-500 text-sm line-clamp-1 break-words w-full;
   }
 }
+@utility green-badge {
+  @apply rounded-full px-3 py-1 font-medium text-sm bg-[#ECFDF3] text-[#027A48];
+}
+
+@utility red-badge {
+  @apply rounded-full px-3 py-1 font-medium text-sm bg-[#FDF2FA] text-[#C11574];
+}

@@ -67,3 +67,15 @@ interface UserTable {
   lastActivityDate: string | null;
   borrowedBooks: number;
 }
+
+interface AccountTable {
+  id: string;
+  fullName: string;
+  email: string;
+  universityId: number;
+  universityCard: string;
+  role: "USER" | "ADMIN" | null;
+  createdAt: Date | null;
+  status: "PENDING" | "APPROVED" | "REJECTED" | null;
+  lastActivityDate: string | null;
+}
