@@ -20,7 +20,7 @@ const Search = () => {
       } else {
         params.delete("search");
       }
-
+      params.delete("page");
       router.push(`?${params.toString()}`);
     },
     800,
