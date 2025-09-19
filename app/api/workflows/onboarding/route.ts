@@ -12,7 +12,6 @@ type InitialData = {
 };
 
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
-const THREE_DAYS_IN_MS = 3 * ONE_DAY_IN_MS;
 const THIRTY_DAYS_IN_MS = 30 * ONE_DAY_IN_MS;
 
 const getUserState = async (email: string): Promise<UserState> => {
@@ -28,9 +27,8 @@ const getUserState = async (email: string): Promise<UserState> => {
   const now = new Date();
   const timeDiff = now.getTime() - lastActivityDate.getTime();
 
-  return timeDiff > THREE_DAYS_IN_MS && timeDiff <= THIRTY_DAYS_IN_MS
-    ? "non-active"
-    : "active";
+  // Active if last activity is within 30 days
+  return timeDiff <= THIRTY_DAYS_IN_MS ? "active" : "non-active";
 };
 
 export const { POST } = serve<InitialData>(async (context) => {
@@ -41,12 +39,10 @@ export const { POST } = serve<InitialData>(async (context) => {
       name: fullName,
       email,
       subject: "Welcome to Bookwise",
-      title: `Hello ${fullName}, welcome to our platform!`,
+      title: `Welcome to Bookwise!`,
       message: `Your account has been successfully created. We're excited to have you on board.`,
     });
   });
-
-  await context.sleep("wait-for-3-days", 60 * 60 * 24 * 3);
 
   while (true) {
     const state = await context.run("check-user-state", async () => {
@@ -60,17 +56,7 @@ export const { POST } = serve<InitialData>(async (context) => {
           email,
           title: "We miss you at Bookwise!",
           subject: "We miss you at Bookwise!",
-          message: `Hello ${fullName}, we noticed you haven't been active lately. Come back and continue where you left off.`,
-        });
-      });
-    } else if (state === "active") {
-      await context.run("send-email-active", async () => {
-        await sendEmail({
-          name: fullName,
-          email,
-          subject: "Welcome back to Bookwise!",
-          title: `Welcome back, ${fullName}!`,
-          message: `Hello ${fullName}, we're glad to see you back! Explore new features and make the most out of your experience.`,
+          message: `We noticed you haven't been active lately. Come back and continue where you left off.`,
         });
       });
     }
