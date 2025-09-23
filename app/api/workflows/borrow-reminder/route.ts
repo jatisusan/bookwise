@@ -5,7 +5,7 @@ import { serve } from "@upstash/workflow/nextjs";
 import dayjs from "dayjs";
 import { eq } from "drizzle-orm";
 
-export const scheduledWorkflow = serve(async (context) => {
+export const { POST } = serve(async (context) => {
   await context.run("send-borrow-reminders", async () => {
     const records = await db
       .select({
