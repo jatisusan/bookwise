@@ -4,7 +4,7 @@ import UserCard from "@/components/UserCard";
 import { db } from "@/database/drizzle";
 import { books, borrowRecords } from "@/database/schema";
 import { daysLeftToDue } from "@/lib/utils";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -131,7 +131,7 @@ const page = async () => {
             </ul>
           ) : (
             <p className="text-light-100 text-xl">
-              You haven't borrowed any books.
+              You haven&apos;t borrowed any books.
             </p>
           )}
         </div>
